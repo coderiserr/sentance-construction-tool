@@ -15,7 +15,7 @@ const App = () => {
   const quizFinished = useSelector(selectQuizFinished);
 
   useEffect(() => {
-    // Fetch questions when the app loads
+  
     dispatch(fetchQuestionsThunk());
   }, [dispatch]);
 
