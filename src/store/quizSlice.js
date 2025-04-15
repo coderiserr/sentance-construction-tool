@@ -73,22 +73,49 @@ const quizSlice = createSlice({
     },
     selectAnswer: (state, action) => {
       const { optionId, position } = action.payload;
+      const currentQuestion = state.questions[state.currentQuestion];
       
-      
+      // If position is -1, remove the selection for this option
       if (position === -1) {
-        
         delete state.selectedAnswers[optionId];
         return;
       }
-      
-     
-      Object.keys(state.selectedAnswers).forEach(key => {
-        if (state.selectedAnswers[key] === position) {
-          delete state.selectedAnswers[key];
+
+      // If a specific position is provided, use it
+      if (position !== undefined && position >= 0) {
+        // Remove any existing selection for this option
+        if (state.selectedAnswers[optionId] !== undefined) {
+          delete state.selectedAnswers[optionId];
         }
-      });
+        
+        // Add the new selection
+        state.selectedAnswers[optionId] = position;
+        return;
+      }
+
+      // Find the first empty position in the sentence
+      let targetPosition = -1;
+      const blankCount = currentQuestion.text.split('___').length - 1;
       
-      state.selectedAnswers[optionId] = position;
+      for (let i = 0; i < blankCount; i++) {
+        if (!Object.values(state.selectedAnswers).includes(i)) {
+          targetPosition = i;
+          break;
+        }
+      }
+
+      // If no empty position found, don't allow selection
+      if (targetPosition === -1) {
+        return;
+      }
+
+      // Remove any existing selection for this option
+      if (state.selectedAnswers[optionId] !== undefined) {
+        delete state.selectedAnswers[optionId];
+      }
+
+      // Add the new selection
+      state.selectedAnswers[optionId] = targetPosition;
     },
     moveToNextQuestion: (state) => {
       const currentQuestionData = state.questions[state.currentQuestion];

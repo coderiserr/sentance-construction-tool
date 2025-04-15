@@ -20,10 +20,12 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center p-4">
-      {!quizStarted && !quizFinished && <StartScreen />}
-      {quizStarted && !quizFinished && <QuizScreen />}
-      {quizFinished && <ResultScreen />}
+    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col justify-center items-center p-4">
+      <div className="w-full max-w-5xl">
+        {!quizStarted && !quizFinished && <StartScreen />}
+        {quizStarted && !quizFinished && <QuizScreen />}
+        {quizFinished && <ResultScreen />}
+      </div>
     </div>
   );
 };

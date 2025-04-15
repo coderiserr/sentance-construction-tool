@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
   startQuiz,
@@ -13,6 +13,7 @@ const StartScreen = () => {
   const questions = useSelector(selectQuestions);
   const status = useSelector(selectQuizStatus);
   const error = useSelector(selectQuizError);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleStartQuiz = () => {
     dispatch(startQuiz());
@@ -45,50 +46,53 @@ const StartScreen = () => {
   }
 
   return (
-    <div className="shadow-2xl p-5 w-1/2 flex flex-col items-center justify-center">
-      <div className="flex justify-center mb-4">
-        <div className="text-5xl font-bold text-center">
-          <h1 className="text-gray-800">Sentence Construction</h1>
+    <div className="w-full h-full flex flex-col items-center justify-center p-6">
+      <div className="text-center mb-8 animate-fade-in">
+        <h1 className="text-5xl font-bold text-gray-800 mb-4">Sentence Construction</h1>
+        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          Test your grammar skills by completing sentences with the correct words in the right order.
+        </p>
+      </div>
+      
+      <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-4xl transform transition-all duration-300 hover:scale-[1.01]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-blue-50 rounded-lg p-6 text-center transform transition-all duration-300 hover:scale-105">
+            <div className="text-3xl mb-2">⏱️</div>
+            <h3 className="font-semibold text-lg text-gray-700">Time Per Question</h3>
+            <p className="text-gray-500 text-xl">30 sec</p>
+          </div>
+          
+          <div className="bg-indigo-50 rounded-lg p-6 text-center transform transition-all duration-300 hover:scale-105">
+            <div className="text-3xl mb-2">📝</div>
+            <h3 className="font-semibold text-lg text-gray-700">Total Questions</h3>
+            <p className="text-gray-500 text-xl">{questions.length}</p>
+          </div>
+          
+          <div className="bg-purple-50 rounded-lg p-6 text-center transform transition-all duration-300 hover:scale-105">
+            <div className="text-3xl mb-2">🪙</div>
+            <h3 className="font-semibold text-lg text-gray-700">Coins</h3>
+            <p className="text-gray-500 text-xl">0</p>
+          </div>
+        </div>
+        
+        <div className="flex justify-center">
+          <button 
+            onClick={handleStartQuiz}
+            className={`px-8 py-4 text-xl font-medium rounded-lg transition-all duration-300 ${
+              isHovered 
+                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg scale-105' 
+                : 'bg-blue-600 text-white'
+            }`}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            Start Quiz
+          </button>
         </div>
       </div>
       
-      <p className="text-gray-600 text-xl text-center mb-8">
-        Select the correct words to complete the sentence by arranging
-        the provided options in the right order.
-      </p>
-      
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="text-gray-700">
-          <span className="font-semibold text-lg ">Time Per Question</span>
-          <p className="text-gray-500 text-lg">30 sec</p>
-        </div>
-        
-        <div className="text-gray-700">
-          <span className="font-semibold text-lg">Total Questions</span>
-          <p className="text-gray-500 text-lg">{questions.length}</p>
-        </div>
-        
-        <div className="text-gray-700 col-span-2">
-          <span className="font-semibold text-lg">Coins</span>
-          <p className="text-gray-500 flex items-center text-lg">
-            <span className="text-yellow-500 mr-1">🪙</span> 0
-          </p>
-        </div>
-      </div>
-      
-      <div className="flex gap-32 mt-4">
-        <button 
-          className="px-5 -ml-5 text-lg py-3 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 "
-        >
-          Back
-        </button>
-        
-        <button 
-          onClick={handleStartQuiz}
-          className="px-5 text-lg py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 "
-        >
-          Start
-        </button>
+      <div className="mt-8 text-center text-gray-500">
+        <p>Click "Start Quiz" to begin the sentence construction challenge!</p>
       </div>
     </div>
   );
