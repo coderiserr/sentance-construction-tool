@@ -25,7 +25,7 @@ const QuizScreen = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   
-  // Handle timer logic
+
   useEffect(() => {
     let interval;
 
@@ -85,7 +85,7 @@ const QuizScreen = () => {
 
   return (
     <div className="w-full h-full flex flex-col">
-      {/* Header with timer and quit button */}
+    
       <div className="bg-white shadow-md p-4 mb-6">
         <div className="max-w-5xl mx-auto flex justify-between items-center">
           <div className="text-xl font-semibold text-gray-700">
@@ -119,14 +119,14 @@ const QuizScreen = () => {
         </div>
       </div>
 
-      {/* Main content */}
+    
       <div className="flex-1 flex flex-col items-center justify-center p-6">
         <div className="bg-white rounded-xl shadow-xl p-8 w-full max-w-4xl">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
             Complete the sentence by selecting the correct words
           </h2>
 
-          {/* Sentence with blanks */}
+        
           <div className="text-xl text-gray-800 mb-12 leading-relaxed p-6 bg-gray-50 rounded-lg">
             {sentenceParts.map((part, index) => (
               <React.Fragment key={index}>
@@ -155,7 +155,7 @@ const QuizScreen = () => {
             ))}
           </div>
 
-          {/* Word options */}
+       
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {question.options.map((option) => {
               const isSelected = Object.keys(selectedAnswers).includes(option.id.toString());
@@ -170,14 +170,14 @@ const QuizScreen = () => {
                   }`}
                   onClick={() => {
                     if (isSelected) {
-                      // If already selected, remove it
+                     
                       dispatch(selectAnswerAction({ optionId: option.id, position: -1 }));
                     } else {
-                      // Find the first empty position
+                    
                       const filledPositions = new Set(Object.values(selectedAnswers));
                       let targetPosition = -1;
                       
-                      // Find first empty position in the sentence
+                     
                       for (let i = 0; i < sentenceParts.length - 1; i++) {
                         if (!filledPositions.has(i)) {
                           targetPosition = i;
@@ -197,7 +197,7 @@ const QuizScreen = () => {
             })}
           </div>
 
-          {/* Navigation */}
+       
           <div className="flex justify-end">
             <button
               className={`px-6 py-3 rounded-lg flex items-center transition-all duration-300 ${
@@ -226,7 +226,7 @@ const QuizScreen = () => {
         </div>
       </div>
 
-      {/* Quit confirmation modal */}
+   
       {showConfirmation && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">

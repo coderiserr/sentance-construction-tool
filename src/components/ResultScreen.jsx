@@ -20,7 +20,6 @@ const ResultScreen = () => {
   
   useEffect(() => {
     dispatch(submitAnswersThunk(userAnswers));
-    // Trigger animation after component mounts
     setTimeout(() => setAnimateScore(true), 500);
   }, [dispatch, userAnswers]);
   
